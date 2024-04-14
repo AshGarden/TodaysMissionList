@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Kufam:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet"> -->
+    <style src="reset.css"></style>
+    <title>To Do List</title>
+    <style>
+
+body {
+            font-family: 'Kufam', 'Noto Sans JP', sans-serif;
+            background-color: #ccc;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* タイトルのスタイル */
+        h1 {
+            text-align: center;
+            font-size: 2.5em;
+            color: #fff;
+            margin-bottom: 20px; /* 追加：タイトルとフォームの間隔を調整 */
+        }
+
+        /* フォームのスタイル */
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px; /* 要素間のスペース */
+            align-items: center; /* 中央揃え */
+            margin-bottom: 50px; /* 追加ボタンとToDoリストとの距離 */
+            width: 100%; /* 追加：フォームの幅を最大に */
+            max-width: 500px; /* 追加：最大幅を設定（必要に応じて調整） */
+            padding: 0 20px; /* 追加：左右のパディングを設定 */
+            box-sizing: border-box; /* 追加：パディングを幅に含める */
+        }
+        /* inputタグのスタイル */
+        input[type="text"] {
+            width: 100%; /* 幅を最大に */
+            padding: 10px; /* パディングを追加 */
+            font-size: 1.2em; /* フォントサイズを大きく */
+            border-radius: 5px; /* ボーダーラジウスを追加 */
+            border: none;
+        }
+
+        /* Enterボタンのスタイル */
+        .btn-top {
+            color: #fff;
+            background: #ccc;
+            border:1px solid #fff;
+            position: relative;
+            top: 17px;
+            left: 0; /* 変更：左側の位置を0に設定 */
+            right: 0; /* 変更：右側の位置を0に設定 */
+            margin: auto;
+            text-decoration: none;
+            font-weight: bold;
+            width: min-content; /* 変更：ボタンの幅を内容に基づいて自動調整 */
+            padding: 10px 20px; /* 変更：左右のパディングを20pxに設定 */
+            cursor: pointer;
+            border-radius: 5px; /* 追加：ボーダーラジウスを追加 */
+        }
+
+        /* Enterボタンのホバー時のスタイル */
+        .btn-top:hover {
+            color: #fff;
+            background: #8b0000;
+            border:solid 1px #8b0000;
+        }
+
+        /* ToDoリストのスタイル */
+        .todo-list {
+            list-style-type: none;
+            padding: 0;
+            background-color: #fff;
+            color: #111;
+            border-radius: 5px;
+            font-size: 1.5em;
+        }
+
+        /* 各ToDoアイテムのスタイル */
+        .todo-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border: 1px solid #8B0000;
+            border-radius: 5px;
+
+        }
+
+        /* 削除ボタンのスタイル */
+        .delete-button {
+            border: 1px solid #8B0000;
+            background-color: #fff;
+            color: #8B0000;
+            border: 1px solid #8B0000;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            
+        }
+
+        /* 削除ボタンのホバー時のスタイル */
+        .delete-button:hover {
+            background-color: #8B0000;
+            color: #fff;
+        }
+
+        /* ローマ数字のスタイル */
+        .roman {
+            font-family: serif; /* ローマ数字用のフォント */
+            margin-right: 10px; /* ローマ数字とToDoテキストの間隔 */
+        }
+
+        /* ToDoテキストのスタイル */
+        .todo-text {
+            flex-grow: 1.5; /* ToDoテキストと削除ボタンとの間にスペースを作る */
+        }
+        .todo-item {
+            display: flex;
+            align-items: center;
+}
+input[type="checkbox"] {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  border: 1px solid #8b0000;
+  vertical-align: -5px;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+}
+
+input[type="checkbox"]:checked:before {
+  position: absolute;
+  top: -1px;
+  left: 4px;
+  transform: rotate(50deg);
+  width: 6px;
+  height: 12px;
+  border-right: 2px solid #8b0000;
+  border-bottom: 2px solid #111;
+  content: '';
+}
+    </style>
+</head>
+<body>
+    <!-- ToDoリストのコンテナ -->
+    <div id="root">
+        <!-- タイトル -->
+        <h1>Today's Mission List</h1>
+        <!-- ToDoを追加するためのフォーム -->
+        <form>
+            <input type="text" />
+            <button class="btn-top" type="Submit">Enter</button>
+        </form>
+        <!-- ToDoリスト -->
+        <ul class="todo-list"></ul>
+    </div>
+
+    <script src="main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.10.2/Sortable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script> <!-- スマホ対応のためのライブラリ -->
+
+</body>
+</html>
